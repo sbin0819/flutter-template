@@ -38,7 +38,7 @@ class _WebviewScreenState extends State<WebviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue[200],
+          backgroundColor: Colors.amberAccent,
           title: const Text('Code Factory'),
           actions: [
             IconButton(
