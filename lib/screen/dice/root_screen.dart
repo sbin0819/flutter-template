@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:hello_world/screen/dice/home_screen.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:hello_world/screen/dice/settings_screen.dart';
+import 'package:shake/shake.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
@@ -11,13 +14,22 @@ class RootScreen extends StatefulWidget {
 
 class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin {
   TabController? _tabController;
+  double threshold = 2.7;
+  int number = 1;
+  ShakeDetector? shakeDetector;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
 
+    _tabController = TabController(length: 2, vsync: this);
     _tabController!.addListener(tabListener);
+
+    shakeDetector = ShakeDetector.autoStart(
+      shakeSlopTimeMS: 100,
+      shakeThresholdGravity: threshold,
+      onPhoneShake: onPhoneShake,
+    );
   }
 
   @override
@@ -35,17 +47,13 @@ class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  @override
-  void dispose() {
-    _tabController!.removeListener(tabListener);
-    _tabController!.dispose();
-    super.dispose();
-  }
-
   List<Widget> renderChildren() {
     return [
-      const HomeScreen(number: 1),
-      'Tab2'.text.color(Colors.white).make().centered(),
+      HomeScreen(number: number),
+      SettingsScreen(
+        threshold: threshold,
+        onThresholdChanged: onThresholdChanged,
+      ),
     ];
   }
 
@@ -68,5 +76,26 @@ class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin {
         ),
       ],
     );
+  }
+
+  void onThresholdChanged(double value) {
+    setState(() {
+      threshold = value;
+    });
+  }
+
+  void onPhoneShake() {
+    final random = Random();
+    setState(() {
+      number = random.nextInt(6) + 1;
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController!.removeListener(tabListener);
+    _tabController!.dispose();
+    shakeDetector!.stopListening();
+    super.dispose();
   }
 }

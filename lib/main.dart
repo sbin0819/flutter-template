@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/screen/dice/app.dart';
+import 'package:hello_world/screen/player/app.dart';
 
 void main() {
   // runApp(const MaterialApp(
@@ -9,5 +9,6 @@ void main() {
   //   home: AlbumScreen(),
   // ));
   // runApp(const DateScreenApp());
-  runApp(const DiceApp());
+  // runApp(const DiceApp());
+  runApp(const PlayerApp());
 }
