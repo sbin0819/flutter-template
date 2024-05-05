@@ -1,7 +1,10 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_world/screen/player/app.dart';
+import 'package:hello_world/screen/album/app.dart';
 
-void main() {
+late List<CameraDescription> cameras;
+
+void main() async {
   // runApp(const MaterialApp(
   //   home: WebviewScreen(),
   // ));
@@ -10,5 +13,13 @@ void main() {
   // ));
   // runApp(const DateScreenApp());
   // runApp(const DiceApp());
-  runApp(const PlayerApp());
+  // runApp(const PlayerApp());
+
+  // WidgetsFlutterBinding.ensureInitialized();
+  // cameras = await availableCameras();
+  // runApp(CameraApp(
+  //   cameras: cameras,
+  // ));
+
+  runApp(const AlbumApp());
 }
